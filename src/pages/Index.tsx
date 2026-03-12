@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import RevenuePotential from "@/components/RevenuePotential";
+import EngineeringExperience from "@/components/EngineeringExperience";
 import MarketParticipation from "@/components/MarketParticipation";
 import AssetIntegration from "@/components/AssetIntegration";
 import PlatformCapabilities from "@/components/PlatformCapabilities";
@@ -14,6 +16,8 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
+      <RevenuePotential />
+      <EngineeringExperience />
       <MarketParticipation />
       <AssetIntegration />
       <PlatformCapabilities />

@@ -1,12 +1,12 @@
 const steps = [
-  { num: "01", title: "Market Data Ingestion", desc: "Continuous ingestion of real-time and historical market data from Nord Pool and TSO systems." },
-  { num: "02", title: "Electricity Price Forecasting", desc: "Proprietary price forecasting models for Baltic day-ahead, intraday, and balancing markets." },
-  { num: "03", title: "Multi-market Optimization", desc: "Simultaneous optimization across all available revenue streams for each asset." },
-  { num: "04", title: "Automated Market Bidding", desc: "Automated bid submission to Nord Pool and TSO ancillary service markets." },
-  { num: "05", title: "Real-time Dispatch Control", desc: "Direct dispatch signals to asset SCADA systems for optimal market execution." },
+  { num: "01", title: "Market Data Ingestion", desc: "Real-time and historical electricity market data." },
+  { num: "02", title: "Price Forecasting", desc: "Short-term price forecasting for day-ahead, intraday and balancing markets." },
+  { num: "03", title: "Multi-Market Optimization", desc: "Optimization of dispatch across multiple markets." },
+  { num: "04", title: "Automated Market Bidding", desc: "Bid submission to Nord Pool and balancing markets." },
+  { num: "05", title: "Dispatch Control", desc: "Dispatch signals sent to asset SCADA systems." },
 ];
 
-const integrations = ["Nord Pool markets", "Latvian TSO (AST)", "Asset SCADA systems"];
+const integrations = ["Nord Pool markets", "Baltic TSOs", "Asset SCADA systems"];
 
 const HowItWorks = () => {
   return (
