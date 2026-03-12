@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const assetTypes = ["Battery storage", "CHP + battery", "Solar PV + battery"];
 const durations = ["1 hour", "2 hours", "4 hours"];
 
 const baseRevenue: Record<string, [number, number]> = {
@@ -11,7 +10,6 @@ const baseRevenue: Record<string, [number, number]> = {
 };
 
 const RevenueCalculator = () => {
-  const [assetType, setAssetType] = useState(assetTypes[0]);
   const [powerMW, setPowerMW] = useState(1);
   const [duration, setDuration] = useState(durations[1]);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -21,13 +19,11 @@ const RevenueCalculator = () => {
   const [socMax, setSocMax] = useState(90);
 
   const base = baseRevenue[duration] || [160, 260];
-  const assetMultiplier =
-    assetType === "CHP + battery" ? 1.1 : assetType === "Solar PV + battery" ? 1.05 : 1;
   const efficiencyFactor = roundTrip / 88;
   const socFactor = (socMax - socMin) / 80;
 
-  const low = Math.round(base[0] * powerMW * assetMultiplier * efficiencyFactor * socFactor);
-  const high = Math.round(base[1] * powerMW * assetMultiplier * efficiencyFactor * socFactor);
+  const low = Math.round(base[0] * powerMW * efficiencyFactor * socFactor);
+  const high = Math.round(base[1] * powerMW * efficiencyFactor * socFactor);
 
   return (
     <section id="calculator" className="section-padding bg-background">
@@ -41,19 +37,6 @@ const RevenueCalculator = () => {
 
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Asset Type</label>
-              <select
-                value={assetType}
-                onChange={(e) => setAssetType(e.target.value)}
-                className="w-full bg-card border border-border rounded-md px-4 py-3 text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
-              >
-                {assetTypes.map((t) => (
-                  <option key={t}>{t}</option>
-                ))}
-              </select>
-            </div>
-
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Battery Power: <span className="text-accent-brand font-bold">{powerMW} MW</span>
@@ -129,7 +112,7 @@ const RevenueCalculator = () => {
                 €{low.toLocaleString()}K – €{high.toLocaleString()}K
               </p>
               <p className="text-muted-foreground text-sm mb-6">
-                for {powerMW} MW / {parseFloat(duration) * powerMW} MWh {assetType.toLowerCase()}
+                for {powerMW} MW / {parseFloat(duration) * powerMW} MWh battery storage
               </p>
 
               <div className="border-t border-border pt-6 mb-6">

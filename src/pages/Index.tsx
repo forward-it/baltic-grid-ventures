@@ -17,7 +17,6 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <RevenuePotential />
-      <EngineeringExperience />
       <MarketParticipation />
       <AssetIntegration />
       <PlatformCapabilities />
