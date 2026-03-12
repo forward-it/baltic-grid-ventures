@@ -17,7 +17,7 @@ const EngineeringExperience = () => {
             Engineering Experience in Energy Asset Integration
           </h2>
           <p className="text-muted-foreground text-lg mb-8">
-            Members of our engineering team have participated in the qualification and integration of flexible energy assets for participation in electricity markets.
+            Our engineering team has qualified and integrated over 120 MW of flexible energy assets for participation in power markets.
           </p>
 
           <p className="text-muted-foreground mb-4">Experience includes:</p>
