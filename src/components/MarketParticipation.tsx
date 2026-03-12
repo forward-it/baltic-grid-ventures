@@ -32,13 +32,15 @@ const MarketParticipation = () => {
             <h3 className="font-display text-lg font-semibold text-foreground mb-6">Markets Supported</h3>
             <div className="space-y-3">
               <div className="bg-card border border-border rounded-lg p-4">
-                <p className="font-medium text-foreground">Nord Pool day-ahead market</p>
+                <p className="font-medium text-foreground">Nord Pool</p>
+                <p className="text-sm text-muted-foreground mt-1">Day-Ahead · Intraday market</p>
               </div>
               <div className="bg-card border border-border rounded-lg p-4">
-                <p className="font-medium text-foreground">Nord Pool intraday market</p>
+                <p className="font-medium text-foreground">Baltic Balancing Capacity Market</p>
+                <p className="text-sm text-muted-foreground mt-1">mFRR · aFRR · FCR</p>
               </div>
               <div className="bg-card border border-border rounded-lg p-4">
-                <p className="font-medium text-foreground">Baltic ancillary services markets</p>
+                <p className="font-medium text-foreground">Baltic Balancing Energy Market</p>
                 <p className="text-sm text-muted-foreground mt-1">mFRR · aFRR · FCR</p>
               </div>
             </div>

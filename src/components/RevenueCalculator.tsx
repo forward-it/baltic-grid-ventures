@@ -3,39 +3,31 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const assetTypes = ["Battery storage", "CHP + battery", "Solar PV + battery"];
 const durations = ["1 hour", "2 hours", "4 hours"];
-const countries = ["Latvia", "Lithuania", "Estonia"];
 
-const revenueTable: Record<string, Record<string, [number, number]>> = {
-  Latvia: { "1 hour": [120, 200], "2 hours": [160, 260], "4 hours": [200, 300] },
-  Lithuania: { "1 hour": [110, 190], "2 hours": [150, 250], "4 hours": [180, 280] },
-  Estonia: { "1 hour": [100, 180], "2 hours": [140, 240], "4 hours": [170, 260] },
+const baseRevenue: Record<string, [number, number]> = {
+  "1 hour": [120, 200],
+  "2 hours": [160, 260],
+  "4 hours": [200, 300],
 };
 
 const RevenueCalculator = () => {
   const [assetType, setAssetType] = useState(assetTypes[0]);
-  const [powerMW, setPowerMW] = useState(2);
+  const [powerMW, setPowerMW] = useState(1);
   const [duration, setDuration] = useState(durations[1]);
-  const [country, setCountry] = useState(countries[0]);
-  const [includeSolar, setIncludeSolar] = useState(false);
-  const [includeCHP, setIncludeCHP] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [roundTrip, setRoundTrip] = useState(88);
-  const [cycleLimit, setCycleLimit] = useState(365);
   const [socMin, setSocMin] = useState(10);
   const [socMax, setSocMax] = useState(90);
 
-  const base = revenueTable[country]?.[duration] || [160, 260];
-  const hybridMultiplier = 1 + (includeSolar ? 0.08 : 0) + (includeCHP ? 0.12 : 0);
+  const base = baseRevenue[duration] || [160, 260];
   const assetMultiplier =
     assetType === "CHP + battery" ? 1.1 : assetType === "Solar PV + battery" ? 1.05 : 1;
   const efficiencyFactor = roundTrip / 88;
   const socFactor = (socMax - socMin) / 80;
 
-  const low = Math.round(base[0] * powerMW * hybridMultiplier * assetMultiplier * efficiencyFactor * socFactor);
-  const high = Math.round(base[1] * powerMW * hybridMultiplier * assetMultiplier * efficiencyFactor * socFactor);
-  const platformShareLow = Math.round(low * 0.175);
-  const platformShareHigh = Math.round(high * 0.175);
+  const low = Math.round(base[0] * powerMW * assetMultiplier * efficiencyFactor * socFactor);
+  const high = Math.round(base[1] * powerMW * assetMultiplier * efficiencyFactor * socFactor);
 
   return (
     <section id="calculator" className="section-padding bg-background">
@@ -100,43 +92,6 @@ const RevenueCalculator = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Country</label>
-              <select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="w-full bg-card border border-border rounded-md px-4 py-3 text-foreground focus:ring-2 focus:ring-ring focus:outline-none"
-              >
-                {countries.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Optional Hybrid Assets</label>
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={includeSolar}
-                    onChange={(e) => setIncludeSolar(e.target.checked)}
-                    className="rounded border-border accent-accent-warm"
-                  />
-                  Include Solar PV
-                </label>
-                <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={includeCHP}
-                    onChange={(e) => setIncludeCHP(e.target.checked)}
-                    className="rounded border-border accent-accent-warm"
-                  />
-                  Include CHP
-                </label>
-              </div>
-            </div>
-
             <div className="border border-border rounded-lg">
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
@@ -150,10 +105,6 @@ const RevenueCalculator = () => {
                   <div>
                     <label className="block text-xs text-muted-foreground mb-1">Round-trip Efficiency: {roundTrip}%</label>
                     <input type="range" min={70} max={96} value={roundTrip} onChange={(e) => setRoundTrip(+e.target.value)} className="w-full accent-accent-warm" />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Annual Cycle Limit: {cycleLimit}</label>
-                    <input type="range" min={100} max={730} value={cycleLimit} onChange={(e) => setCycleLimit(+e.target.value)} className="w-full accent-accent-warm" />
                   </div>
                   <div>
                     <label className="block text-xs text-muted-foreground mb-1">Min SoC: {socMin}%</label>
@@ -178,7 +129,7 @@ const RevenueCalculator = () => {
                 €{low.toLocaleString()}K – €{high.toLocaleString()}K
               </p>
               <p className="text-muted-foreground text-sm mb-6">
-                for {powerMW} MW / {parseFloat(duration) * powerMW} MWh {assetType.toLowerCase()} in {country}
+                for {powerMW} MW / {parseFloat(duration) * powerMW} MWh {assetType.toLowerCase()}
               </p>
 
               <div className="border-t border-border pt-6 mb-6">
@@ -190,26 +141,7 @@ const RevenueCalculator = () => {
                 </ul>
               </div>
 
-              <div className="border-t border-border pt-6 mb-6">
-                <p className="text-sm text-muted-foreground mb-1">Estimated platform profit share (17.5%)</p>
-                <p className="font-display text-lg font-semibold text-foreground">
-                  €{platformShareLow.toLocaleString()}K – €{platformShareHigh.toLocaleString()}K
-                </p>
-              </div>
-
-              <div className="border-t border-border pt-6">
-                <p className="text-sm text-muted-foreground uppercase tracking-wider mb-4">Example Revenue Scenario</p>
-                <div className="bg-accent-warm-light rounded-lg p-5">
-                  <p className="font-medium text-foreground mb-2">2 MW / 4 MWh battery storage system</p>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Day-ahead arbitrage · Intraday trading · Balancing services
-                  </p>
-                  <p className="font-display text-2xl font-bold text-accent-brand mt-2">€280K – €420K / year</p>
-                  <p className="text-xs text-muted-foreground mt-1">depending on market conditions</p>
-                </div>
-              </div>
-
-              <p className="text-xs text-muted-foreground mt-6">
+              <p className="text-xs text-muted-foreground">
                 Estimates are based on historical Baltic electricity market data.
               </p>
             </div>
