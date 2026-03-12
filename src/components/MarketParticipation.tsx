@@ -16,16 +16,16 @@ const MarketParticipation = () => {
             <h3 className="font-display text-lg font-semibold text-foreground mb-6">Registrations</h3>
             <div className="space-y-4">
               {[
-                {
-                  main: "Registered electricity trader",
-                  sub: "EIC 43X-STJ02709060N · ACER A00250726.LV",
-                },
-                "Registered balancing service provider in Latvia",
-                "Nord Pool market participant",
+                { main: "Registered electricity trader", sub: "EIC 43X-STJ02709060N · ACER A00250726.LV" },
+                { main: "Registered balancing service provider in Latvia" },
+                { main: "Nord Pool market participant" },
               ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
+                <div key={item.main} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-accent-brand mt-0.5 shrink-0" />
-                  <p className="text-foreground">{item}</p>
+                  <div>
+                    <p className="text-foreground">{item.main}</p>
+                    {item.sub && <p className="text-sm text-muted-foreground mt-0.5">{item.sub}</p>}
+                  </div>
                 </div>
               ))}
             </div>
