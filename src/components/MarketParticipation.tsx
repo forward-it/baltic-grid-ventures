@@ -16,7 +16,10 @@ const MarketParticipation = () => {
             <h3 className="font-display text-lg font-semibold text-foreground mb-6">Registrations</h3>
             <div className="space-y-4">
               {[
-                "Registered electricity trader",
+                {
+                  main: "Registered electricity trader",
+                  sub: "EIC 43X-STJ02709060N · ACER A00250726.LV",
+                },
                 "Registered balancing service provider in Latvia",
                 "Nord Pool market participant",
               ].map((item) => (
