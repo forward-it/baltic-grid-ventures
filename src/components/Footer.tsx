@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <img src={logo} alt="Forward Power Markets" className="h-6" />
           <p className="text-primary-foreground/40 text-sm">
-            © {new Date().getFullYear()} Forward Power Markets. Registered in Latvia. All rights reserved.
+            © {new Date().getFullYear()} SIA Forward IT Consulting · 40103746299 · Registered in Latvia. All rights reserved.
           </p>
         </div>
       </div>
