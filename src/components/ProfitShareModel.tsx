@@ -12,7 +12,7 @@ const ProfitShareModel = () => {
 
           <div className="bg-accent-warm-light border border-accent-warm/20 rounded-lg p-8 mb-8">
             <p className="font-display text-3xl font-bold text-accent-brand mb-2">15–20%</p>
-            <p className="text-foreground font-medium">of additional market revenue generated</p>
+            <p className="text-foreground font-medium">of market revenue generated</p>
           </div>
 
           <p className="text-muted-foreground mb-4">The exact share depends on:</p>

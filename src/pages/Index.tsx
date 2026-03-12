@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import RevenuePotential from "@/components/RevenuePotential";
-import EngineeringExperience from "@/components/EngineeringExperience";
+
 import MarketParticipation from "@/components/MarketParticipation";
 import AssetIntegration from "@/components/AssetIntegration";
 import PlatformCapabilities from "@/components/PlatformCapabilities";
@@ -17,7 +17,6 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <RevenuePotential />
-      <EngineeringExperience />
       <MarketParticipation />
       <AssetIntegration />
       <PlatformCapabilities />
