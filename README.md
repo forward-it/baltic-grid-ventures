@@ -62,12 +62,24 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This repo includes a GitHub Pages workflow.
 
-## Can I connect a custom domain to my Lovable project?
+1. Push the repository to GitHub.
+2. Open GitHub `Settings` -> `Pages`.
+3. Set `Build and deployment` -> `Source` to `GitHub Actions`.
+4. Push to `main` and wait for the `Deploy to GitHub Pages` workflow to complete.
 
-Yes, you can!
+The initial site URL will be:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+`https://forward-it.github.io/baltic-grid-ventures/`
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Can I connect a custom domain?
+
+Yes. GitHub Pages supports one primary custom domain per site.
+
+1. Create `public/CNAME` with your domain as the only line, for example `www.example.com`.
+2. In GitHub `Settings` -> `Pages`, set the same value in `Custom domain`.
+3. Update your DNS records to point to GitHub Pages.
+4. Push again. The workflow will detect `public/CNAME` and build for the custom-domain root path automatically.
+
+If you want both `www.forwardit.lv` and `www.forwardit.ai`, choose one as the primary Pages domain and redirect the other from your DNS or registrar.
