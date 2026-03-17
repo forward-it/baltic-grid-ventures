@@ -131,10 +131,10 @@ const BessIndex = () => {
             Baltic BESS Revenue Index
           </h1>
           <p className="text-xl text-white/60 max-w-3xl mb-6">
-            Projected annual revenue per 1 MW of battery energy storage in Latvia — 2025 to 2040
+            Projected annual revenue per 1 MW / 2 MWh of battery energy storage in Latvia — 2025 to 2040
           </p>
           <p className="text-white/40 max-w-3xl leading-relaxed">
-            This index models expected gross revenue for a 1 MW battery energy storage system (BESS)
+            This index models expected gross revenue for a 1 MW / 2 MWh battery energy storage system (BESS)
             participating in Baltic electricity markets. Projections are based on current market data
             from the Clean Horizon Storage Index and model future market saturation using empirically
             derived decay factors.
@@ -306,7 +306,7 @@ const BessIndex = () => {
           <div className="space-y-4 text-white/60 leading-relaxed max-w-4xl">
             <p>
               The 2025 baseline reflects actual market data: average gross revenue of €600,000 per
-              1 MW of battery storage capacity in Latvia, sourced from the Clean Horizon Storage
+              1 MW / 2 MWh of battery storage capacity in Latvia, sourced from the Clean Horizon Storage
               Index.
             </p>
             <p>
@@ -359,7 +359,7 @@ const BessIndex = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://forwardpowermarkets.com"
+              href="https://www.forwardit.ai/#calculator"
               className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-md font-semibold transition-colors text-center"
             >
               Open Revenue Calculator

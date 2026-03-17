@@ -46,7 +46,13 @@ const MarketParticipation = () => {
                 <p className="font-medium text-foreground">Baltic Balancing Energy Market</p>
                 <p className="text-sm text-muted-foreground mt-1">mFRR · aFRR · FCR</p>
               </div>
-            </div>
+             </div>
+             <a
+               href="/bess-index"
+               className="inline-flex items-center gap-2 text-accent-brand hover:underline font-medium text-sm mt-6"
+             >
+               Explore projected market revenues →
+             </a>
           </div>
         </div>
       </div>
