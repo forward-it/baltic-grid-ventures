@@ -131,7 +131,7 @@ const BessIndex = () => {
             Baltic BESS Revenue Index
           </h1>
           <p className="text-xl text-white/60 max-w-3xl mb-6">
-            Projected annual revenue per 1 MW of battery energy storage in Latvia — 2025 to 2040
+            Projected annual revenue per 1 MW / 2 MWh of battery energy storage in Latvia — 2025 to 2040
           </p>
           <p className="text-white/40 max-w-3xl leading-relaxed">
             This index models expected gross revenue for a 1 MW battery energy storage system (BESS)
