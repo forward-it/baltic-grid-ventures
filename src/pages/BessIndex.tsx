@@ -134,7 +134,7 @@ const BessIndex = () => {
             Projected annual revenue per 1 MW / 2 MWh of battery energy storage in Latvia — 2025 to 2040
           </p>
           <p className="text-white/40 max-w-3xl leading-relaxed">
-            This index models expected gross revenue for a 1 MW battery energy storage system (BESS)
+            This index models expected gross revenue for a 1 MW / 2 MWh battery energy storage system (BESS)
             participating in Baltic electricity markets. Projections are based on current market data
             from the Clean Horizon Storage Index and model future market saturation using empirically
             derived decay factors.
