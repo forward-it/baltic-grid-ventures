@@ -359,7 +359,7 @@ const BessIndex = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://forwardpowermarkets.com"
+              href="https://www.forwardit.ai/#calculator"
               className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-md font-semibold transition-colors text-center"
             >
               Open Revenue Calculator

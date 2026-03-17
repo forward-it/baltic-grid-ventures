@@ -31,9 +31,16 @@ const RevenuePotential = () => {
             ))}
           </ul>
 
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm mb-6">
             Actual revenue depends on asset configuration, grid constraints, and market conditions.
           </p>
+
+          <a
+            href="/bess-index"
+            className="inline-flex items-center gap-2 text-accent-brand hover:underline font-medium text-sm"
+          >
+            View the full Baltic BESS Revenue Index (2025–2040) →
+          </a>
         </div>
       </div>
     </section>
