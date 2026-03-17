@@ -306,7 +306,7 @@ const BessIndex = () => {
           <div className="space-y-4 text-white/60 leading-relaxed max-w-4xl">
             <p>
               The 2025 baseline reflects actual market data: average gross revenue of €600,000 per
-              1 MW of battery storage capacity in Latvia, sourced from the Clean Horizon Storage
+              1 MW / 2 MWh of battery storage capacity in Latvia, sourced from the Clean Horizon Storage
               Index.
             </p>
             <p>
