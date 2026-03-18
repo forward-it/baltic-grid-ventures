@@ -27,8 +27,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const DATA = [
   { year: 2025, da: 70000, frr: 492000, fcr: 38000 },
