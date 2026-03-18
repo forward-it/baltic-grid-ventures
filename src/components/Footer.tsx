@@ -25,7 +25,7 @@ const Footer = () => {
               <span>Registered balancing service provider in Latvia</span>
               <span>Nord Pool market participant</span>
             </div>
-            <p className="text-primary-foreground/40 text-sm">
+            <p className="text-primary-foreground/40 text-xs">
               © {new Date().getFullYear()} SIA Forward IT Consulting · 40103746299 · Registered in
               Latvia. All rights reserved.
             </p>
