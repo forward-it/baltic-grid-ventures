@@ -10,6 +10,7 @@ const Navbar = () => {
           <a href="#markets" className="hover:text-accent-brand transition-colors">Markets</a>
           <a href="#platform" className="hover:text-accent-brand transition-colors">Platform</a>
           <a href="#calculator" className="hover:text-accent-brand transition-colors">Calculator</a>
+          <Link to="/bess-index" className="hover:text-accent-brand transition-colors">BESS Index</Link>
           <a href="#contact" className="gradient-accent text-accent-foreground px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity">
             Estimate Revenue
           </a>
