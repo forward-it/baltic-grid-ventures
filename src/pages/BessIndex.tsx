@@ -1,7 +1,9 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   AreaChart,
   Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -19,36 +21,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 
 const DATA = [
   { year: 2025, da: 70000, frr: 492000, fcr: 38000 },
-  { year: 2026, da: 66500, frr: 442800, fcr: 36100 },
-  { year: 2027, da: 63175, frr: 398520, fcr: 34295 },
-  { year: 2028, da: 60016.25, frr: 358668, fcr: 32580.25 },
-  { year: 2029, da: 57015.44, frr: 322801.2, fcr: 30951.24 },
-  { year: 2030, da: 54164.67, frr: 290521.08, fcr: 29403.68 },
-  { year: 2031, da: 51456.43, frr: 261468.97, fcr: 27933.49 },
-  { year: 2032, da: 48883.61, frr: 235322.07, fcr: 26536.82 },
-  { year: 2033, da: 46439.43, frr: 211789.87, fcr: 25209.98 },
-  { year: 2034, da: 44117.46, frr: 190610.88, fcr: 23949.48 },
-  { year: 2035, da: 41911.59, frr: 171549.79, fcr: 22752 },
-  { year: 2036, da: 39816.01, frr: 154394.81, fcr: 21614.4 },
-  { year: 2037, da: 37825.21, frr: 138955.33, fcr: 20533.68 },
-  { year: 2038, da: 35933.95, frr: 125059.8, fcr: 19507 },
-  { year: 2039, da: 34137.25, frr: 112553.82, fcr: 18531.65 },
-  { year: 2040, da: 32430.39, frr: 101298.44, fcr: 17605.07 },
+  { year: 2026, da: 70000, frr: 443000, fcr: 36000 },
+  { year: 2027, da: 67000, frr: 399000, fcr: 34000 },
+  { year: 2028, da: 66000, frr: 359000, fcr: 33000 },
+  { year: 2029, da: 65000, frr: 323000, fcr: 31000 },
+  { year: 2030, da: 63000, frr: 291000, fcr: 29000 },
+  { year: 2031, da: 62000, frr: 261000, fcr: 28000 },
+  { year: 2032, da: 61000, frr: 235000, fcr: 27000 },
+  { year: 2033, da: 60000, frr: 212000, fcr: 25000 },
+  { year: 2034, da: 58000, frr: 191000, fcr: 24000 },
+  { year: 2035, da: 57000, frr: 172000, fcr: 23000 },
+  { year: 2036, da: 56000, frr: 154000, fcr: 22000 },
+  { year: 2037, da: 55000, frr: 139000, fcr: 21000 },
+  { year: 2038, da: 54000, frr: 125000, fcr: 20000 },
+  { year: 2039, da: 53000, frr: 113000, fcr: 19000 },
+  { year: 2040, da: 52000, frr: 101000, fcr: 18000 },
 ];
 
 const fmt = (v: number) =>
   "€" + v.toLocaleString("en-US", { maximumFractionDigits: 0 });
 
 const HIGHLIGHT_YEARS: Record<number, string> = {
-  2025: "Current — Clean Horizon Storage Index of Latvia",
-  2036: "Projected — Clean Horizon Storage Index of Sweden",
-  2040: "Projected — Clean Horizon Storage Index of Finland",
+  2025: "Current — baseline from TSO data for Latvia",
+  2031: "Approaching current Clean Horizon 2h Index of Sweden (€368K)",
+  2032: "Approaching current Clean Horizon 2h Index of Finland (€329K)",
+  2036: "Approaching current Clean Horizon 2h Index of Germany (€236K)",
 };
 
 const GLOSSARY = [
@@ -71,6 +79,14 @@ const chartData = DATA.map((d) => ({
   FCR: d.fcr,
   Total: d.da + d.frr + d.fcr,
 }));
+
+const daShareData = DATA.map((d) => {
+  const total = d.da + d.frr + d.fcr;
+  return {
+    year: d.year,
+    "DA Share": parseFloat(((d.da / total) * 100).toFixed(1)),
+  };
+});
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
@@ -95,7 +111,19 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   );
 };
 
+const DAShareTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-[hsl(220,25%,10%)] border border-white/10 rounded-lg px-4 py-3 text-sm shadow-xl">
+      <p className="font-display font-semibold text-white mb-1">{label}</p>
+      <p className="text-emerald-400 font-mono">{payload[0].value}%</p>
+    </div>
+  );
+};
+
 const BessIndex = () => {
+  const [assumptionsOpen, setAssumptionsOpen] = useState(false);
+
   const tableRows = useMemo(
     () =>
       DATA.map((d) => ({
@@ -135,9 +163,10 @@ const BessIndex = () => {
           </p>
           <p className="text-white/40 max-w-3xl leading-relaxed">
             This index models expected gross revenue for a 1 MW / 2 MWh battery energy storage system (BESS)
-            participating in Baltic electricity markets. Projections are based on current market data
-            from the Clean Horizon Storage Index and model future market saturation using empirically
-            derived decay factors.
+            participating in Baltic electricity markets. The 2025 baseline is derived from TSO data.
+            Future projections apply market-specific decay factors to model saturation as storage
+            capacity grows, and are cross-referenced against the Clean Horizon Storage Index for
+            comparable European markets.
           </p>
         </div>
       </section>
@@ -146,10 +175,10 @@ const BessIndex = () => {
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { value: "€600,000", title: "2025 Revenue per MW", label: "Current Clean Horizon Storage Index (Latvia)" },
-            { value: "€215,825", title: "2036 Projected", label: "Reaching Sweden saturation level" },
-            { value: "€151,334", title: "2040 Projected", label: "Reaching Finland saturation level" },
-            { value: "3 Revenue Streams", title: "Market Participation", label: "Day-Ahead · FRR · FCR" },
+            { value: "€600,000", title: "2025 Baseline", label: "Based on TSO data for Latvia" },
+            { value: "€351,000", title: "2031 Projected", label: "Approaching Sweden saturation level" },
+            { value: "€232,000", title: "2036 Projected", label: "Approaching Germany saturation level" },
+            { value: "12% → 30%", title: "DA Share Growth", label: "Day-ahead arbitrage share of revenue, 2025 to 2040" },
           ].map((m) => (
             <div
               key={m.title}
@@ -162,6 +191,48 @@ const BessIndex = () => {
               <p className="text-xs text-white/40">{m.label}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Model Assumptions */}
+      <section className="pb-10 px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <Collapsible open={assumptionsOpen} onOpenChange={setAssumptionsOpen}>
+            <CollapsibleTrigger className="flex items-center gap-2 w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-6 py-4 hover:bg-white/[0.05] transition-colors text-left">
+              <span className="font-display font-semibold text-white text-sm flex-1">Model Assumptions</span>
+              {assumptionsOpen ? (
+                <ChevronUp className="h-4 w-4 text-white/40" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-white/40" />
+              )}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="mt-2 bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div>
+                  <p className="text-xs text-white/40 mb-1">Battery</p>
+                  <p className="text-sm font-mono text-white/80">1 MW / 2 MWh (2-hour duration)</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/40 mb-1">2025 Baseline</p>
+                  <p className="text-sm font-mono text-white/80">€600,000 /MW/yr</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/40 mb-1">Baseline Source</p>
+                  <p className="text-sm font-mono text-white/80">TSO</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/40 mb-1">Decay Factors</p>
+                  <p className="text-sm font-mono text-white/80">DA: 0.98 · FRR: 0.90 · FCR: 0.95</p>
+                </div>
+                <div className="sm:col-span-2">
+                  <p className="text-xs text-white/40 mb-1">2025 Breakdown</p>
+                  <p className="text-sm font-mono text-white/80">
+                    DA €70,000 (11.67%) · FRR €492,000 (82.00%) · FCR €38,000 (6.33%)
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       </section>
 
@@ -213,7 +284,7 @@ const BessIndex = () => {
         </div>
       </section>
 
-      {/* Chart */}
+      {/* Stacked Area Chart */}
       <section className="pb-20 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-display text-2xl font-bold mb-6">Revenue Projection Chart</h2>
@@ -252,22 +323,22 @@ const BessIndex = () => {
                   wrapperStyle={{ paddingTop: 16, fontSize: 12, color: "rgba(255,255,255,0.5)" }}
                 />
                 <ReferenceLine
-                  x={2025}
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeDasharray="4 4"
-                  label={{ value: "Latvia (current)", fill: "rgba(255,255,255,0.3)", fontSize: 10, position: "top" }}
-                />
-                <ReferenceLine
-                  x={2036}
+                  x={2031}
                   stroke="rgba(255,255,255,0.2)"
                   strokeDasharray="4 4"
                   label={{ value: "Sweden level", fill: "rgba(255,255,255,0.3)", fontSize: 10, position: "top" }}
                 />
                 <ReferenceLine
-                  x={2040}
+                  x={2032}
                   stroke="rgba(255,255,255,0.2)"
                   strokeDasharray="4 4"
                   label={{ value: "Finland level", fill: "rgba(255,255,255,0.3)", fontSize: 10, position: "top" }}
+                />
+                <ReferenceLine
+                  x={2036}
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeDasharray="4 4"
+                  label={{ value: "Germany level", fill: "rgba(255,255,255,0.3)", fontSize: 10, position: "top" }}
                 />
                 <Area
                   type="monotone"
@@ -299,29 +370,86 @@ const BessIndex = () => {
         </div>
       </section>
 
+      {/* DA Share Trend Chart */}
+      <section className="pb-20 px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-display text-2xl font-bold mb-2">Day-Ahead Share of Revenue</h2>
+          <p className="text-white/40 max-w-3xl leading-relaxed mb-6 text-sm">
+            As balancing markets saturate, day-ahead arbitrage becomes a larger share of total
+            revenue — driven by increasing renewable penetration and persistent price spreads.
+          </p>
+          <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={daShareData} margin={{ top: 10, right: 10, left: 20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis
+                  dataKey="year"
+                  tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 12 }}
+                  axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
+                  tickLine={false}
+                />
+                <YAxis
+                  tickFormatter={(v) => `${v}%`}
+                  tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 12 }}
+                  axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
+                  tickLine={false}
+                  domain={[0, 35]}
+                />
+                <Tooltip content={<DAShareTooltip />} />
+                <Line
+                  type="monotone"
+                  dataKey="DA Share"
+                  stroke="#22c55e"
+                  strokeWidth={2}
+                  dot={{ fill: "#22c55e", r: 3 }}
+                  activeDot={{ r: 5 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </section>
+
       {/* Methodology */}
       <section className="pb-20 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-display text-2xl font-bold mb-6">Index Methodology</h2>
           <div className="space-y-4 text-white/60 leading-relaxed max-w-4xl">
             <p>
-              The 2025 baseline reflects actual market data: average gross revenue of €600,000 per
-              1 MW / 2 MWh of battery storage capacity in Latvia, sourced from the Clean Horizon Storage
-              Index.
+              The 2025 baseline of €600,000/MW/yr is derived from TSO data for a 1 MW / 2 MWh BESS
+              in Latvia. For context, Clean Horizon reports Baltic 2h BESS revenues of €700K–€3.5M/MW/yr
+              since the balancing market opened in February 2025. Our baseline sits below this range to
+              account for operational ramp-up and seasonal variation.
             </p>
             <p>
-              Future projections apply market saturation decay factors to each revenue stream to
-              model increasing competition as more storage capacity enters the Baltic market. The
-              decay factors used are: Day-Ahead Arbitrage — 0.95 per year, Frequency Restoration
-              Reserve (aFRR + mFRR) — 0.90 per year, Frequency Containment Reserve (FCR) — 0.95
-              per year. The Frequency Restoration Reserve decays faster because balancing markets in
-              the Baltics are smaller and saturate more quickly.
+              Future projections apply annual decay factors to each revenue stream to model increasing
+              competition as more storage capacity enters the Baltic market. The decay factors are:
+              Day-Ahead Arbitrage — 0.98 per year (slower decay, as increasing renewable penetration
+              sustains and may increase price volatility), Frequency Restoration Reserve (aFRR + mFRR)
+              — 0.90 per year (faster decay, because Baltic balancing markets are small and saturate
+              quickly), Frequency Containment Reserve (FCR) — 0.95 per year (moderate decay, as FCR
+              volumes are limited but more stable).
             </p>
             <p>
-              The model is calibrated against current storage revenue benchmarks in comparable Nordic
-              markets. By 2036, projected Latvian revenue converges with the current Clean Horizon
-              Storage Index of Sweden. By 2040, it converges with the current Clean Horizon Storage
-              Index of Finland — both more mature storage markets.
+              Because balancing services decay faster than day-ahead arbitrage, the DA share of total
+              revenue grows from approximately 12% in 2025 to over 30% by 2040. This reflects a
+              structural transition from an ancillary-service-dominated revenue mix to a more
+              trading-oriented model — consistent with the trajectory observed in more mature European
+              storage markets.
+            </p>
+            <p>
+              The model is cross-referenced against the Clean Horizon Storage Index (2-hour duration,
+              2025 monthly averages) for comparable markets: Sweden SE3 (€367,500/MW/yr), Finland
+              (€329,083/MW/yr), and Germany (€235,500/MW/yr). These represent progressively more mature
+              storage markets. By 2031, projected Latvian revenue approaches the current Swedish level.
+              By 2036, it approaches the current German level.
+            </p>
+            <p>
+              The Baltic balancing market (FCR, aFRR, mFRR) opened in February 2025. All projections
+              extrapolate from less than one full year of operating history. Revenue figures are gross —
+              grid fees, taxes, degradation costs, and state-of-charge management costs are not deducted.
+              The Clean Horizon Storage Index is calculated using the COSMOS optimisation tool with 1.5
+              cycles/day constraint and historical market prices, and is now distributed via Nord Pool.
             </p>
           </div>
         </div>
