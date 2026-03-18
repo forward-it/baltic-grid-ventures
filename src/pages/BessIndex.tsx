@@ -136,18 +136,7 @@ const BessIndex = () => {
 
   return (
     <div className="min-h-screen bg-[hsl(220,25%,6%)] text-white">
-      {/* Nav */}
-      <nav className="border-b border-white/5 bg-[hsl(220,25%,8%)]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 h-16 flex items-center">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Forward Power Markets
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
       <section className="pt-20 pb-12 px-6 lg:px-8">
