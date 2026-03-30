@@ -76,7 +76,7 @@ const Research = () => {
 
           <div className="bg-card border border-border rounded-xl p-8 space-y-6 mt-8">
             <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground leading-snug">
-              Projekta progress: TRL 4 sasniegts
+              Projekta progress
             </h2>
 
             <div className="bg-muted rounded-lg p-4 inline-block">
@@ -98,6 +98,14 @@ const Research = () => {
               fāze, apvienojot EMS moduļus vienotā prototipā un simulējot reāllaika datu plūsmas no
               koģenerācijas un bateriju (BESS) sistēmām.
             </p>
+
+            <div className="pt-4 border-t border-border">
+              <img
+                src={euFundingLogo}
+                alt="Funded by the European Union – NextGenerationEU · National Development Plan 2027"
+                className="max-h-24 object-contain"
+              />
+            </div>
           </div>
         </div>
       </main>
