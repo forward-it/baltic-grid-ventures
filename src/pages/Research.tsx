@@ -73,6 +73,32 @@ const Research = () => {
               />
             </div>
           </div>
+
+          <div className="bg-card border border-border rounded-xl p-8 space-y-6 mt-8">
+            <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground leading-snug">
+              Projekta progress: TRL 4 sasniegts
+            </h2>
+
+            <div className="bg-muted rounded-lg p-4 inline-block">
+              <p className="text-sm text-muted-foreground mb-1">Periods</p>
+              <p className="font-medium text-foreground">10.2025. – 03.2026.</p>
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed">
+              Projekta pirmajos sešos mēnešos uzņēmums "Forward IT Consulting" ir veiksmīgi
+              īstenojis TRL 4, izstrādājot un laboratoriski validējot viedās enerģijas vadības
+              sistēmas (EMS) pamata moduļus: datu iegūšanu, cenu prognozēšanu un darbības
+              optimizāciju. Veiktas tehniskās izpētes vizītes un datu audits koģenerācijas stacijā
+              "Warmeston Granulas", pēc kurām precizēti EMS integrācijas scenāriji, identificēti BESS
+              ieviešanas riski, pielāgota turpmākā pētījuma plānošana.
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed">
+              Paralēli tehniskajam darbam tika stiprināta pētnieciskā bāze un uzsākta integrācijas
+              fāze, apvienojot EMS moduļus vienotā prototipā un simulējot reāllaika datu plūsmas no
+              koģenerācijas un bateriju (BESS) sistēmām.
+            </p>
+          </div>
         </div>
       </main>
       <Footer />
