@@ -7,13 +7,13 @@ const Navbar = () => {
       <div className="section-container flex items-center justify-between h-16">
         <img src={logo} alt="Forward Power Markets" className="h-7" />
         <div className="hidden md:flex items-center gap-8 text-sm text-surface-dark-foreground/70">
-          <a href="#markets" className="hover:text-accent-brand transition-colors">Markets</a>
-          <a href="#platform" className="hover:text-accent-brand transition-colors">Platform</a>
-          <a href="#calculator" className="hover:text-accent-brand transition-colors">Calculator</a>
+          <Link to="/#markets" className="hover:text-accent-brand transition-colors">Markets</Link>
+          <Link to="/#platform" className="hover:text-accent-brand transition-colors">Platform</Link>
+          <Link to="/#calculator" className="hover:text-accent-brand transition-colors">Calculator</Link>
           <Link to="/bess-index" className="hover:text-accent-brand transition-colors">BESS Index</Link>
-          <a href="#contact" className="gradient-accent text-accent-foreground px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity">
+          <Link to="/#contact" className="gradient-accent text-accent-foreground px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity">
             Estimate Revenue
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
