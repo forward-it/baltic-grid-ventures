@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="section-container">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <img src={logo} alt="Forward Power Markets" className="h-6" />
+            <Link to="/"><img src={logo} alt="Forward Power Markets" className="h-6" /></Link>
             <div className="flex items-center gap-6 text-sm">
               <Link
                 to="/research"
