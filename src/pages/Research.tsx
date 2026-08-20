@@ -107,6 +107,40 @@ const Research = () => {
               />
             </div>
           </div>
+
+          <div className="bg-card border border-border rounded-xl p-8 space-y-6 mt-8">
+            <h2 className="font-display text-xl md:text-2xl font-semibold text-foreground leading-snug">
+              Projekta progress
+            </h2>
+
+            <div className="bg-muted rounded-lg p-4 inline-block">
+              <p className="text-sm text-muted-foreground mb-1">Periods</p>
+              <p className="font-medium text-foreground">04.2026. – 09.2026.</p>
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed">
+              Projektā ar jūniju tika noslēgts rūpnieciskā pētījuma posms, veiksmīgi izstrādājot un
+              laboratorijas vidē validējot EMS+BESS risinājuma moduļus šķeldas koģenerācijas iekārtu
+              ekonomiskās atdeves paaugstināšanai. Ar pētījumu un tā rezultātiem piedalījāmies
+              konferencē Norvēģijā (22nd International Conference on EUROPEAN ENERGY MARKET – EEM
+              2026), kuras noslēgumā zinātniskā publikācija tika iekļauta gan IEEEXplore, gan Scopus
+              datubāzēs.
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed">
+              Ar jūliju ir uzsākts projekta eksperimentālās izstrādes posms, kas turpināsies līdz
+              gada beigām. Tajā sistēmas prototips sākotnēji tiks testēts laboratorijas vidē, pēc tam
+              kontrolētā vidē un visbeidzot – reālajā ražošanas vidē.
+            </p>
+
+            <div className="pt-4 border-t border-border">
+              <img
+                src={euFundingLogo}
+                alt="Funded by the European Union – NextGenerationEU · National Development Plan 2027"
+                className="max-h-24 object-contain"
+              />
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
